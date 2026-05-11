@@ -118,10 +118,14 @@ if __name__ == '__main__':
 
 
 
-
+    # modify the following two directories according to your local data and work place. 
+    # The data directory should contain the downloaded SWIFT data, which should be organized in subdirectories named with the observation id (obsid) of each observation. 
+    # The work directory is where the photometry results will be saved, and it will not be automatically created if it does not exist.
     master_dir = '/home/ping/'  # /mnt/md0/
     data_dir = os.path.join(master_dir, 'image/SWIFT_rawdownload/' + sn_work_name)
-    
+    work_dir = os.path.join(master_dir, 'photometry/SWIFT/' + sn_work_name)
+
+
     if len(obs_id_list) == 1 and obs_id_list[0] == '':
         # use all obsid directories under the data_dir
         obs_id_list = np.unique([f[:8] for f in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, f)) and f.startswith('0') and len(f) == 11])
@@ -131,7 +135,6 @@ if __name__ == '__main__':
             raise ValueError("no valid observation id found...")
         print('Found the following obsids:', obs_id_list)
 
-    work_dir = os.path.join(master_dir, 'photometry/SWIFT/' + sn_work_name)
 
     if not tplonly:
         for flt in swift_uvot_flts:
